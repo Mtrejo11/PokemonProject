@@ -59,7 +59,13 @@ const FirstActivity_StackNavigator = createStackNavigator({
       headerTintColor: '#fff',
     }),
   },
-  PokeList : {screen : PokeList},
+  PokeList : {screen : PokeList,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Pokemon de la region',
+      
+
+    }),
+  },
 });
 
 //For React Navigation 2.+ need to use StackNavigator instead createStackNavigator

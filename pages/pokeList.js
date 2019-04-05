@@ -51,10 +51,13 @@ export default class PokeList extends React.Component {
     if (item.empty === true) {
       return <View style={[styles.item, styles.itemInvisible]} />;
     }
+
     return (
       <View
         style={styles.item}
       >
+        <Image source={require('http://pokestadium.com/sprites/xy/bulbasaur.gif')} ></Image>
+
         <Text style={styles.itemText}>{item.name}</Text>
       </View>
     );
@@ -73,7 +76,7 @@ export default class PokeList extends React.Component {
 
     return(
       <View style={styles.listado}>
-        <Text>Listado de Pokemon</Text>
+        <Text> de Pokemon</Text>
         <FlatList
           data = {formatData(this.state.pokemon, numColumns)}
           //style={styles.container}

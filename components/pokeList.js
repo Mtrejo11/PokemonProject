@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, Dimensions, Text, View, StyleSheet } from 'react-native';
+import { FlatList, Dimensions, Text, View, StyleSheet, Image } from 'react-native';
 
 const numColumns = 3;
 
@@ -55,6 +55,10 @@ export default class PokeList extends React.Component {
       <View
         style={styles.item}
       >
+        <Image
+          style={{width: 60, height: 60}}
+          source={{uri: 'http://pokestadium.com/sprites/xy/'+item.name+'.gif'}}
+        />
         <Text style={styles.itemText}>{item.name}</Text>
       </View>
     );
@@ -74,6 +78,7 @@ export default class PokeList extends React.Component {
     return(
       <View style={styles.listado}>
         <Text>Listado de Pokemon</Text>
+
         <FlatList
           data = {formatData(this.state.pokemon, numColumns)}
           //style={styles.container}
