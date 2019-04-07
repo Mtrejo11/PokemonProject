@@ -17,7 +17,7 @@ import {
 import firebase from 'firebase';
 
 
-import NavigationDrawerStructure from './pages/Menu';
+import NavigationDrawerStructure from './components/Menu';
 import { Button, Text } from 'react-native-elements';
 
 class App extends React.Component {

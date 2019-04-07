@@ -20,7 +20,7 @@ import firebase from 'firebase';
 import Screen1 from './Screen1';
 import Screen2 from './Screen2';
 import Screen3 from './Screen3';
-import PokeList from '../components/pokeList';
+import PokeList from './pokeList';
 
 class NavigationDrawerStructure extends Component {
   //Structure for the navigatin Drawer
@@ -82,7 +82,7 @@ const Screen2_StackNavigator = createStackNavigator({
   Second: {
     screen: Screen2,
     navigationOptions: ({ navigation }) => ({
-      title: 'Demo Screen 2',
+      title: 'Your Teams',
       headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
 
       headerStyle: {

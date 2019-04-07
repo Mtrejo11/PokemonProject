@@ -78,15 +78,7 @@ export default class PokeList extends React.Component {
 
   componentWillMount() {
     this.getPokemon();
-/*     var config = {
-      apiKey: "AIzaSyA3lL6OyQUB9wFfq_vljnBCU9u2Ee_ka5Y",
-      authDomain: "reactnativedatabase-e2a50.firebaseapp.com",
-      databaseURL: "https://reactnativedatabase-e2a50.firebaseio.com",
-      projectId: "reactnativedatabase-e2a50",
-      storageBucket: "",
-      messagingSenderId: "385603840051"
-    };
-    firebase.initializeApp(config); */
+
   }
 
   getPokemon = () => {
