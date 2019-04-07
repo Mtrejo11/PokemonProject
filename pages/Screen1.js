@@ -6,13 +6,22 @@ export default class ButtonBasics extends Component {
     super(props);
 
     this.state = {
-      idRegion: ""
+      idRegion: 'kanto',
     }
   }
 
 
   _onPressButton() {
-    Alert.alert('You tapped the button!')
+    //Alert.alert('You tapped the button!')
+    //() => this.props.navigation.navigate('PokeList')
+  }
+
+  pickRegion(id){
+    //Alert.alert('You tapped the button!')
+    //this.setState({idRegion : id})
+   // alert(id)
+    this.props.navigation.navigate('PokeList',{idRegion : id})
+    //this.state.idRegion = 
   }
 
   render() {
@@ -21,51 +30,46 @@ export default class ButtonBasics extends Component {
         
         <View style={styles.buttonContainer}>
           <Button
-            idBtn = {1}
-            onPress={() => this.props.navigation.navigate('PokeList')}
+            
+            onPress={() => this.pickRegion("kanto")} 
             title="kanto"
             color="#841584"
           />
         </View>
         <View style={styles.buttonContainer}>
           <Button
-            onPress={this._onPressButton}
+            onPress={() => this.pickRegion("johto")}
             title="johto"
           />
         </View>
         <View style={styles.buttonContainer}>
           <Button
-            onPress={this._onPressButton}
+            onPress={() => this.pickRegion("hoenn")}
             title="hoenn"
             color="#841584"
           />
         </View>
         <View style={styles.buttonContainer}>
           <Button
-            onPress={this._onPressButton}
+            onPress={() => this.pickRegion("sinnoh")}
             title="sinnoh"
             color="#841584"
           />
         </View>
         <View style={styles.buttonContainer}>
           <Button
-            onPress={this._onPressButton}
+            onPress={() => this.pickRegion("unova")}
             title="unova"
           />
         </View>
         <View style={styles.buttonContainer}>
           <Button
-            onPress={this._onPressButton}
+            onPress={() => this.pickRegion("kalos")}
             title="kalos"
             color="#841584"
           />
         </View>
-        <View style={styles.buttonContainer}>
-          <Button
-            onPress={this._onPressButton}
-            title="alola"
-          />
-        </View>
+
       </View>
     );
   }

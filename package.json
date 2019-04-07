@@ -12,6 +12,7 @@
     "react-native-drawer": "^2.5.1",
     "react-native-elements": "^1.1.0",
     "react-native-gesture-handler": "^1.1.0",
+    "react-native-modal": "^9.0.0",
     "react-native-paper": "^2.15.0",
     "react-navigation": "^3.6.1",
     "react-timer-mixin": "^0.13.4"

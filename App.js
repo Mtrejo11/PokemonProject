@@ -117,7 +117,7 @@ const DrawerNavigatorExample = createDrawerNavigator({
     //Title
     screen: FirstActivity_StackNavigator,
     navigationOptions: {
-      drawerLabel: 'Demo Screen 1',
+      drawerLabel: 'Regiones Pokemon',
     },
   },
 
@@ -125,7 +125,7 @@ const DrawerNavigatorExample = createDrawerNavigator({
     //Title
     screen: Screen2_StackNavigator,
     navigationOptions: {
-      drawerLabel: 'Demo Screen 2',
+      drawerLabel: 'Mis equipos',
     },
   },
 
@@ -133,7 +133,7 @@ const DrawerNavigatorExample = createDrawerNavigator({
     //Title
     screen: Screen3_StackNavigator,
     navigationOptions: {
-      drawerLabel: 'Demo Screen 3',
+      drawerLabel: 'Cerrar Sesion',
     },
   },
 });
