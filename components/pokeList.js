@@ -1,6 +1,7 @@
 import React from 'react';
 import { FlatList, Dimensions, Text, View, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import Modal from 'react-native-modal';
+import firebase from 'firebase';
 
 
 const numColumns = 3;
@@ -20,12 +21,12 @@ const formatData = (data, numColumns) => {
 };
 
 
-
+var id;
 export default class PokeList extends React.Component {
 
   constructor(props) {
     super(props);
-    var id = this.props.navigation.state.params.idRegion
+     id = this.props.navigation.state.params.idRegion
     //alert(id)
     var dir = 'https://pokeapi.co/api/v2/pokemon?offset=0&limit=151';
 
@@ -77,7 +78,15 @@ export default class PokeList extends React.Component {
 
   componentWillMount() {
     this.getPokemon();
-
+/*     var config = {
+      apiKey: "AIzaSyA3lL6OyQUB9wFfq_vljnBCU9u2Ee_ka5Y",
+      authDomain: "reactnativedatabase-e2a50.firebaseapp.com",
+      databaseURL: "https://reactnativedatabase-e2a50.firebaseio.com",
+      projectId: "reactnativedatabase-e2a50",
+      storageBucket: "",
+      messagingSenderId: "385603840051"
+    };
+    firebase.initializeApp(config); */
   }
 
   getPokemon = () => {
@@ -107,11 +116,21 @@ export default class PokeList extends React.Component {
 
 
   insertTeam(item) {
-    if (cant < 5) {
+    if (cant < 6) {
       arrayteam.push(item);
       this.setState({ team: arrayteam });
       alert(this.state.team);
       cant++;
+
+      firebase.database().ref(id+'/'+cant).set(
+        {
+          name: item
+        }
+      ).then(() => {
+        alert('INSERTED !');
+      }).catch((error) => {
+        console.log(error);
+      });
     }
     else {
       alert('Haz alcanzado el maximo de pokemon por equipo.')
@@ -259,7 +278,6 @@ export default class PokeList extends React.Component {
   }
 
   componentDidMount() {
-    this.fillTeam(this.state.pokemon);
   }
   /*
     llenarEquipo(data){

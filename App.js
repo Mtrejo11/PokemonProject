@@ -14,27 +14,36 @@ import {
   createAppContainer,
 } from 'react-navigation';
 
-import Screen1 from './pages/Screen1';
-import Screen2 from './pages/Screen2';
-import Screen3 from './pages/Screen3';
-import PokeList from './components/pokeList';
+import firebase from 'firebase';
 
-class NavigationDrawerStructure extends Component {
-  //Structure for the navigatin Drawer
-  toggleDrawer = () => {
-    //Props to open/close the drawer
-    this.props.navigationProps.toggleDrawer();
-  };
+
+import NavigationDrawerStructure from './pages/Menu';
+import { Button, Text } from 'react-native-elements';
+
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+
+
+  }
+
+  componentWillMount() {
+    var config = {
+      apiKey: "AIzaSyA3lL6OyQUB9wFfq_vljnBCU9u2Ee_ka5Y",
+      authDomain: "reactnativedatabase-e2a50.firebaseapp.com",
+      databaseURL: "https://reactnativedatabase-e2a50.firebaseio.com",
+      projectId: "reactnativedatabase-e2a50",
+      storageBucket: "",
+      messagingSenderId: "385603840051"
+    };
+    firebase.initializeApp(config);
+  }
+
   render() {
     return (
-      <View style={{ flexDirection: 'row' }}>
-        <TouchableOpacity onPress={this.toggleDrawer.bind(this)}>
-          {/*Donute Button Image */}
-          <Image
-            source={require('./image/drawer.png')}
-            style={{ width: 25, height: 25, marginLeft: 20 }}
-          />
-        </TouchableOpacity>
+      <View><Text>COmenzar</Text>
+        <Button onPress={() => this.props.navigation.navigate('Nav')}>Iniciar</Button>
+
       </View>
     );
   }
@@ -44,101 +53,33 @@ class NavigationDrawerStructure extends Component {
 //const FirstActivity_StackNavigator = StackNavigator({
 
 //For React Navigation 3.+
-const FirstActivity_StackNavigator = createStackNavigator({
+const Main_StackNavigator = createStackNavigator({
   //All the screen from the Screen1 will be indexed here
-  
-  First: {
-    
-    screen: Screen1,
+  Home: {
+    screen : App,
+  },
+  Nav: {
+
+    screen: NavigationDrawerStructure,
     navigationOptions: ({ navigation }) => ({
       title: 'Regiones',
-      headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
-      headerStyle: {
-        backgroundColor: '#FF9800',
-      },
-      headerTintColor: '#fff',
+      header: null,
     }),
   },
-  PokeList : {screen : PokeList,
-    navigationOptions: ({ navigation }) => ({
-      title: 'Pokemon de la region',
-      
 
-    }),
-  },
 });
 
 //For React Navigation 2.+ need to use StackNavigator instead createStackNavigator
 //const FirstActivity_StackNavigator = StackNavigator({
 
-//For React Navigation 3.+
-const Screen2_StackNavigator = createStackNavigator({
-  //All the screen from the Screen2 will be indexed here
-  Second: {
-    screen: Screen2,
-    navigationOptions: ({ navigation }) => ({
-      title: 'Demo Screen 2',
-      headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
-
-      headerStyle: {
-        backgroundColor: '#FF9800',
-      },
-        headerTintColor: '#fff',
-    }),
-  },
-});
-
-//For React Navigation 2.+ need to use StackNavigator instead createStackNavigator
-//const FirstActivity_StackNavigator = StackNavigator({
-
-//For React Navigation 3.+
-const Screen3_StackNavigator = createStackNavigator({
-  //All the screen from the Screen3 will be indexed here
-  Third: {
-    screen: Screen3,
-    navigationOptions: ({ navigation }) => ({
-      title: 'Demo Screen 3',
-      headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
-      headerStyle: {
-        backgroundColor: '#FF9800',
-      },
-      headerTintColor: '#fff',
-    }),
-  },
-});
 
 //For React Navigation 2.+ need to use DrawerNavigator instead createDrawerNavigator
 //const DrawerNavigatorExample = DrawerNavigator({
 
 //For React Navigation 3.+
-const DrawerNavigatorExample = createDrawerNavigator({
-  //Drawer Optons and indexing
-  Screen1: {
-    //Title
-    screen: FirstActivity_StackNavigator,
-    navigationOptions: {
-      drawerLabel: 'Regiones Pokemon',
-    },
-  },
 
-  Screen2: {
-    //Title
-    screen: Screen2_StackNavigator,
-    navigationOptions: {
-      drawerLabel: 'Mis equipos',
-    },
-  },
-
-  Screen3: {
-    //Title
-    screen: Screen3_StackNavigator,
-    navigationOptions: {
-      drawerLabel: 'Cerrar Sesion',
-    },
-  },
-});
 
 //For React Navigation 2.+ need to export App only
 //export default DrawerNavigatorExample;
 //For React Navigation 3.+
-export default createAppContainer(DrawerNavigatorExample);
+export default createAppContainer(Main_StackNavigator);
