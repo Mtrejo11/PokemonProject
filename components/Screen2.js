@@ -4,12 +4,12 @@
  */
 
 import React, { Component } from 'react';
-import * as firebase from 'firebase';
+import firebase from './firebase';
 import {
-  AppRegistry,
+  Dimensions,
   StyleSheet,
   Text,
-
+  ScrollView,
   FlatList,
   View,
   TouchableOpacity, Image
@@ -27,15 +27,17 @@ export default class nativefirebase extends Component {
     this.itemsRefSinnoh = firebase.database().ref('sinnoh');
     this.itemsRefUnova = firebase.database().ref('unova');
     this.itemsRefKalos = firebase.database().ref('kalos');
-    this.state = { 
-      name: '', 
+    
+    
+    //props to contain every region team
+    this.state = {
+      name: '',
       kanto: [],
-      johto:[],
+      johto: [],
       hoenn: [],
       sinnoh: [],
       unova: [],
-      kalos:[],
-      modalVisible: false, 
+      kalos: [],
     };
   }
 
@@ -47,8 +49,7 @@ export default class nativefirebase extends Component {
     }
     return (
       <TouchableOpacity
-      //style={styles.item}
-      //onPress = {this.changeElement(item)}
+      style = {{padding:20}}
       >
         <Image
           style={{ width: 40, height: 40 }}
@@ -61,33 +62,32 @@ export default class nativefirebase extends Component {
 
 
 
-  // List todos
-  listenForItems(itemsRef,obj) {
+  // List reading from database to deploy
+  listenForItems(itemsRef, obj) {
     itemsRef.on('value', (snap) => {
       var items = [];
       snap.forEach((child) => {
         items.push({
           id: child.key,
           name: child.val().name,
-          //date: child.val().date,
         });
       });
-      if(obj == 'kanto'){
+      if (obj == 'kanto') {
         this.setState({ kanto: items });
       }
-      else if(obj == 'johto'){
+      else if (obj == 'johto') {
         this.setState({ johto: items });
       }
-      else if(obj == 'hoenn'){
+      else if (obj == 'hoenn') {
         this.setState({ hoenn: items });
       }
-      else if(obj == 'sinnoh'){
+      else if (obj == 'sinnoh') {
         this.setState({ sinnoh: items });
       }
-      else if(obj == 'unova'){
+      else if (obj == 'unova') {
         this.setState({ unova: items });
       }
-      else if(obj == 'kalos'){
+      else if (obj == 'kalos') {
         this.setState({ kalos: items });
       }
 
@@ -96,22 +96,32 @@ export default class nativefirebase extends Component {
 
   componentDidMount() {
     this.listenForItems(this.itemsRefKanto, 'kanto');
-    this.listenForItems(this.itemsRefJohto,'johto');
-    this.listenForItems(this.itemsRefHoenn,'hoenn');
-    this.listenForItems(this.itemsRefSinnoh,'sinnoh');
-    this.listenForItems(this.itemsRefUnova,'unova');
-    this.listenForItems(this.itemsRefKalos,'kalos');
+    this.listenForItems(this.itemsRefJohto, 'johto');
+    this.listenForItems(this.itemsRefHoenn, 'hoenn');
+    this.listenForItems(this.itemsRefSinnoh, 'sinnoh');
+    this.listenForItems(this.itemsRefUnova, 'unova');
+    this.listenForItems(this.itemsRefKalos, 'kalos');
   }
-
-
+  _renderButton = (text, onPress) => (
+    <TouchableOpacity onPress={onPress}>
+      <View style={styles.button}>
+        <Text>{text}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+  deleteTeam(deleted) {
+    firebase.database().ref(deleted).remove();
+  }
 
   render() {
     return (
-      <View style={styles.maincontainer}>
+      <ScrollView>
+
+        {/*Teams deployment  */}
 
         <View style={styles.headercontainer}>
-          <Text style={{ fontSize: 20, marginRight: 40 }}>KANTO</Text>
-          
+          <Text style={{ fontSize: 20}}>KANTO</Text>
+
         </View>
         <View style={styles.listcontainer}>
           <FlatList
@@ -122,12 +132,14 @@ export default class nativefirebase extends Component {
             style={{ marginTop: 20 }}
 
           />
+
+          {this._renderButton('Delete Team', () => this.deleteTeam('kanto'))}
         </View>
 
 
         <View style={styles.headercontainer}>
-          <Text style={{ fontSize: 20, marginRight: 40 }}>JOHTO</Text>
-          
+          <Text style={{ fontSize: 20}}>JOHTO</Text>
+
         </View>
         <View style={styles.listcontainer}>
           <FlatList
@@ -138,14 +150,15 @@ export default class nativefirebase extends Component {
             style={{ marginTop: 20 }}
 
           />
+          {this._renderButton('Delete Team', () => this.deleteTeam('johto'))}
         </View>
 
 
 
 
         <View style={styles.headercontainer}>
-          <Text style={{ fontSize: 20, marginRight: 40 }}>HOENN</Text>
-          
+          <Text style={{ fontSize: 20}}>HOENN</Text>
+
         </View>
         <View style={styles.listcontainer}>
           <FlatList
@@ -156,14 +169,15 @@ export default class nativefirebase extends Component {
             style={{ marginTop: 20 }}
 
           />
+          {this._renderButton('Delete Team', () => this.deleteTeam('hoenn'))}
         </View>
 
 
 
 
         <View style={styles.headercontainer}>
-          <Text style={{ fontSize: 20, marginRight: 40 }}>SINNOH</Text>
-          
+          <Text style={{ fontSize: 20}}>SINNOH</Text>
+
         </View>
         <View style={styles.listcontainer}>
           <FlatList
@@ -174,12 +188,13 @@ export default class nativefirebase extends Component {
             style={{ marginTop: 20 }}
 
           />
+          {this._renderButton('Delete Team', () => this.deleteTeam('sinnoh'))}
         </View>
 
 
         <View style={styles.headercontainer}>
-          <Text style={{ fontSize: 20, marginRight: 40 }}>UNOVA</Text>
-          
+          <Text style={{ fontSize: 20}}>UNOVA</Text>
+
         </View>
         <View style={styles.listcontainer}>
           <FlatList
@@ -190,11 +205,12 @@ export default class nativefirebase extends Component {
             style={{ marginTop: 20 }}
 
           />
+          {this._renderButton('Delete Team', () => this.deleteTeam('unova'))}
         </View>
 
         <View style={styles.headercontainer}>
-          <Text style={{ fontSize: 20, marginRight: 40 }}>KALOS</Text>
-          
+          <Text style={{ fontSize: 20}}>KALOS</Text>
+
         </View>
         <View style={styles.listcontainer}>
           <FlatList
@@ -205,9 +221,10 @@ export default class nativefirebase extends Component {
             style={{ marginTop: 20 }}
 
           />
+          {this._renderButton('Delete Team', () => this.deleteTeam('kalos'))}
         </View>
 
-      </View>
+      </ScrollView>
     );
   }
 }
@@ -238,7 +255,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
-
+  button: {
+    backgroundColor: 'lightblue',
+    padding: 12,
+    margin: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 4,
+    borderColor: 'rgba(0, 0, 0, 0.1)',
+  },
+  item: {
+    backgroundColor: '#4D243D',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+    margin: 1,
+    height: Dimensions.get('window').width / numColumns, // approximate a square
+  },
 });
 
-AppRegistry.registerComponent('nativefirebase', () => nativefirebase);

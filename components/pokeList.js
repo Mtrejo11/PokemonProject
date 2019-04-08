@@ -1,12 +1,14 @@
 import React from 'react';
 import { FlatList, Dimensions, Text, View, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import Modal from 'react-native-modal';
-import firebase from 'firebase';
+import firebase from './firebase';
 
 
 const numColumns = 3;
 var cant = 0;
 var arrayteam = [];
+
+//Method to data to avoid blank spaces
 
 const formatData = (data, numColumns) => {
   const numberOfFullRows = Math.floor(data.length / numColumns);
@@ -48,9 +50,6 @@ export default class PokeList extends React.Component {
     else if (id == 'kalos') {
 
     }
-    else if (id == 'alola') {
-
-    }
     else {
       dir = 'https://pokeapi.co/api/v2/pokemon?offset=0&limit=151';
     }
@@ -70,9 +69,7 @@ export default class PokeList extends React.Component {
 
   state = {
     visibleModal: false,
-    visibleTeamModal: false,
     selected: '',
-    changeSelection: '',
     team: [],
   };
 
@@ -106,12 +103,12 @@ export default class PokeList extends React.Component {
     </TouchableOpacity>
   );
 
-
+//Inserting pokemon into database
   insertTeam(item) {
     if (cant < 6) {
       arrayteam.push(item);
       this.setState({ team: arrayteam });
-      alert(this.state.team);
+      
       cant++;
 
       firebase.database().ref(id+'/'+cant).set(
@@ -119,19 +116,19 @@ export default class PokeList extends React.Component {
           name: item
         }
       ).then(() => {
-        alert('INSERTED !');
+        alert('Pokemon inserted in your team');
       }).catch((error) => {
         console.log(error);
       });
     }
     else {
-      alert('Haz alcanzado el maximo de pokemon por equipo.')
+      alert("You don't have any available slots.")
     }
 
   }
 
 
-
+//Modal content setting
   _renderModalContent = (item) => (
     <View style={styles.modalContent}>
       <Image
@@ -140,55 +137,10 @@ export default class PokeList extends React.Component {
       />
       <Text>{item}</Text>
       {this._renderButton('Add to my team', () => this.insertTeam(item))}
-      {this._renderButton('Close', () => this.setState({ visibleModal: null })) /*this._renderButton('Add to my team', () => this.setState({ visibleTeamModal: 1, visibleModal: null }))*/}
+      {this._renderButton('Close', () => this.setState({ visibleModal: null })) }
 
 
     </View>
-  );
-
-
-
-
-  renderTeamItem = ({ item }) => {
-    if (item.empty === true) {
-      return <View style={[styles.item, styles.itemInvisible]} />;
-    }
-    return (
-      <TouchableOpacity
-      //style={styles.item}
-      //onPress = {this.changeElement(item)}
-      >
-        <Image
-          style={{ width: 40, height: 40 }}
-          source={{ uri: 'http://pokestadium.com/sprites/xy/' + item.name + '.gif' }}
-        />
-        <Text >{item.name}</Text>
-      </TouchableOpacity>
-    );
-  };
-
-
-  _renderTeamModalContent = () => (
-
-    <View style={styles.modalContent}>
-      <Text>Your team</Text>
-      <FlatList
-        data={this.state.team}
-        //style={styles.container}
-        renderItem={
-          //({item}) => <Text>{item.name} </Text>
-          this.renderTeamItem
-        }
-        keyExtractor={(item, index) => index.toString()}
-        numColumns={numColumns}
-
-      />
-      {this._renderButton('Close', () => this.setState({ visibleTeamModal: null }))}
-
-
-    </View>
-
-
   );
 
 
@@ -212,17 +164,6 @@ export default class PokeList extends React.Component {
     );
   };
 
-  fillTeam(data) {
-    var arrayTeam = [];
-    for (var i = 0; i < 6; i++) {
-      // note: we add a key prop here to allow react to uniquely identify each
-      // element in this array. see: https://reactjs.org/docs/lists-and-keys.html
-      //team.push(<ObjectRow key={i} />);
-      arrayTeam[i] = data[i];
-    }
-    //alert(arrayTeam);
-    this.setState(this.state.team);
-  }
 
 
 
@@ -232,7 +173,7 @@ export default class PokeList extends React.Component {
     if (this.state.loading) {
       return (
         <View>
-          <Text>Descargando Pokemon</Text>
+          <Text>Downloading Pokemon</Text>
 
         </View>
       )
@@ -240,49 +181,25 @@ export default class PokeList extends React.Component {
 
     return (
       <View style={styles.listado}>
-        <Text>Listado de Pokemon</Text>
 
         <FlatList
           data={formatData(this.state.pokemon, numColumns)}
-          //style={styles.container}
           renderItem={this.renderItem}
           keyExtractor={(item, index) => index.toString()}
           numColumns={numColumns}
 
         />
 
-
-
-
         <Modal isVisible={this.state.visibleModal === 1}>
           {this._renderModalContent(this.state.selected)}
         </Modal>
 
-        <Modal isVisible={this.state.visibleTeamModal === 1}
-          animationIn={'slideInLeft'}
-          animationOut={'slideOutRight'}
-        >
-          {this._renderTeamModalContent()}
-
-        </Modal>
+        
       </View>
     );
   }
 
-  componentDidMount() {
-  }
-  /*
-    llenarEquipo(data){
-      team = [];
-      for (var i = 0; i < 3; i++) {
-        // note: we add a key prop here to allow react to uniquely identify each
-        // element in this array. see: https://reactjs.org/docs/lists-and-keys.html
-        //team.push(<ObjectRow key={i} />);
-        team.push(data[i]);
-        
-      }
-    }
-  */
+
 
 }
 

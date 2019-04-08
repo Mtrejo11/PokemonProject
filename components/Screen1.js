@@ -11,17 +11,11 @@ export default class ButtonBasics extends Component {
   }
 
 
-  _onPressButton() {
-    //Alert.alert('You tapped the button!')
-    //() => this.props.navigation.navigate('PokeList')
-  }
-
+//Setting region for pokemon list deployment
   pickRegion(id){
-    //Alert.alert('You tapped the button!')
-    //this.setState({idRegion : id})
-   // alert(id)
+
     this.props.navigation.navigate('PokeList',{idRegion : id})
-    //this.state.idRegion = 
+
   }
 
   render() {
@@ -53,20 +47,20 @@ export default class ButtonBasics extends Component {
           <Button
             onPress={() => this.pickRegion("sinnoh")}
             title="sinnoh"
-            color="#841584"
+            
           />
         </View>
         <View style={styles.buttonContainer}>
           <Button
             onPress={() => this.pickRegion("unova")}
             title="unova"
+            color="#841584"
           />
         </View>
         <View style={styles.buttonContainer}>
           <Button
             onPress={() => this.pickRegion("kalos")}
             title="kalos"
-            color="#841584"
           />
         </View>
 

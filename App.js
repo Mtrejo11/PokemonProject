@@ -1,20 +1,13 @@
-//This is an example code for NavigationDrawer//
+
 import React, { Component } from 'react';
-//import react in our code.
-import { View, Image, TouchableOpacity } from 'react-native';
-// import all basic components
 
-//For React Navigation 2.+ import following
-//import {DrawerNavigator, StackNavigator} from 'react-navigation';
+import { View, StyleSheet, ImageBackground } from 'react-native';
 
-//For React Navigation 3.+ import following
 import {
-  createDrawerNavigator,
   createStackNavigator,
   createAppContainer,
 } from 'react-navigation';
 
-import firebase from 'firebase';
 
 
 import NavigationDrawerStructure from './components/Menu';
@@ -27,59 +20,89 @@ class App extends React.Component {
 
   }
 
-  componentWillMount() {
-    var config = {
-      apiKey: "AIzaSyA3lL6OyQUB9wFfq_vljnBCU9u2Ee_ka5Y",
-      authDomain: "reactnativedatabase-e2a50.firebaseapp.com",
-      databaseURL: "https://reactnativedatabase-e2a50.firebaseio.com",
-      projectId: "reactnativedatabase-e2a50",
-      storageBucket: "",
-      messagingSenderId: "385603840051"
-    };
-    firebase.initializeApp(config);
-  }
 
   render() {
     return (
-      <View><Text>COmenzar</Text>
-        <Button onPress={() => this.props.navigation.navigate('Nav')}>Iniciar</Button>
 
-      </View>
+
+      <ImageBackground source={{uri:'https://www.desktopbackground.org/p/2014/07/01/786840_original-151-pokemon-phone-wallpapers-imgur_640x1136_h.jpg'}} style={{ width: '100%', height: '100%' }}>
+        <View style={styles.container} >
+          <Text style={styles.title}>Regional Pokemon Selector</Text>
+
+          <View style={styles.buttonContainer}>
+            <Button
+              style={styles.buttonContainer}
+              title="Start"
+              onPress={() => this.props.navigation.navigate('Nav')}
+            />
+
+          </View>
+
+
+        </View>
+      </ImageBackground>
+
     );
   }
 }
 
-//For React Navigation 2.+ need to use StackNavigator instead createStackNavigator
-//const FirstActivity_StackNavigator = StackNavigator({
+//Main navigation controller 
+// Navigation Drawer Setup
 
-//For React Navigation 3.+
 const Main_StackNavigator = createStackNavigator({
-  //All the screen from the Screen1 will be indexed here
+
   Home: {
-    screen : App,
+    screen: App,
+    navigationOptions: ({ navigation }) => ({
+
+      header: null,
+    }),
   },
+
+
   Nav: {
 
     screen: NavigationDrawerStructure,
     navigationOptions: ({ navigation }) => ({
-      title: 'Regiones',
+      title: 'Regions',
       header: null,
     }),
   },
 
 });
 
-//For React Navigation 2.+ need to use StackNavigator instead createStackNavigator
-//const FirstActivity_StackNavigator = StackNavigator({
+const styles = StyleSheet.create({
+  container: {
+ 
 
-
-//For React Navigation 2.+ need to use DrawerNavigator instead createDrawerNavigator
-//const DrawerNavigatorExample = DrawerNavigator({
-
-//For React Navigation 3.+
-
-
-//For React Navigation 2.+ need to export App only
-//export default DrawerNavigatorExample;
-//For React Navigation 3.+
+    justifyContent: 'center',
+    textAlign: 'center',
+    marginLeft: 70,
+  },
+  buttonContainer: {
+    margin: 20,
+    width: 100,
+  },
+  button: {
+    backgroundColor: 'lightblue',
+    padding: 12,
+    marginLeft: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 4,
+    borderColor: 'rgba(0, 0, 0, 0.1)',
+  },
+  alternativeLayoutButtonContainer: {
+    marginLeft: 50,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  title: {
+    color: '#FFFF',
+    fontSize: 50,
+    fontWeight: 'bold',
+    marginBottom: 200,
+    marginTop:50,
+  }
+});
 export default createAppContainer(Main_StackNavigator);
