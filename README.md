@@ -9,4 +9,4 @@ Haciendo clic sobre los pokemon de cada region se puede añadir a un equipo del 
 En el navegador está también la pestaña de equipos de pokemon donde se puede eliminar cada uno de estos.
 Los datos son almacenados en firebase. 
 
-APK en el repositorio.
+APK disponible en: https://drive.google.com/drive/folders/1rx1BK2gGgxTxdkVy8rqrYD3Zd2AJxUBA?usp=sharing
